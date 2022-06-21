@@ -1,0 +1,47 @@
+<%- include('../includes/header'); %>
+
+  <div class="container">
+    <h1>All Post</h1>
+    <a href="/posts/create">
+        <button class="btn btn-primary">Create Post</button>
+    </a>
+    <div>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% posts.forEach(function(post) { %>
+                    <tr>
+                      <td><%= post.id %></td>
+                      <td><%= post.title %></td>
+                      <td><%= post.content %></td>
+                      <td class="d-flex">
+                        <a href="/posts/<%= post.id %>">
+                          <button class="btn btn-primary">
+                            Edit
+                          </button>
+                        </a>
+                        &nbsp;
+                        <a href="/posts/<%= post.id %>" onclick="return confirm('Apakah anda yakin hapus post ini ?')">
+                          <form action="/posts/<%= post.id %>?_method=delete" method="post">
+                            <!-- <input type="hidden" name="_method" value="delete" /> -->
+                            <button class="btn btn-danger">
+                              Delete
+                            </button>
+                          </form>
+                        </a>
+                      </td>
+                    </tr>
+                <% }); %> 
+            </tbody>
+          </table>
+        </div>
+  </div>
+
+  <%- include('../includes/footer'); %>

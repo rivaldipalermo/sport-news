@@ -1,0 +1,43 @@
+<%- include('../includes/header'); %>
+
+  <div class="container">
+    <h1>Category</h1>
+    <a href="/category/create">
+        <button class="btn btn-primary mt-2">Create New Category</button>
+    </a>
+    <div class="col-lg-7 mt-3">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% category.forEach(function(item) { %>
+                    <tr>
+                      <td><%= item.category_name%></td>
+                      <td class="d-flex">
+                        <a href="/category/<%= item.id %>">
+                          <button class="btn btn-primary">
+                            Edit
+                          </button>
+                        </a>
+                        &nbsp;
+                        <a href="/category/<%= item.id %>" onclick="return confirm('Are you sure delete this category ?')">
+                          <form action="/category/<%= item.id %>?_method=delete" method="post">
+                            <!-- <input type="hidden" name="_method" value="delete" /> -->
+                            <button class="btn btn-danger">
+                              Delete
+                            </button>
+                          </form>
+                        </a>
+                      </td>
+                    </tr>
+                <% }); %> 
+            </tbody>
+          </table>
+        </div>
+  </div>
+
+  <%- include('../includes/footer'); %>

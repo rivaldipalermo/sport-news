@@ -1,0 +1,48 @@
+<%- include('../includes/header'); %>
+
+  <div class="container">
+    <a href="/posts/create">
+        <button class="btn btn-primary">Create News</button>
+    </a>
+    <div>
+        <table class="table table-striped mt-2">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Post Date</th>
+                <th>Content</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% news.forEach(function(item) { %>
+                    <tr>
+                      <td><%= item.id %></td>
+                      <td><%= item.news_title %></td>
+                      <td><%= item.post_date %></td>
+                      <td><%= item.news_content %></td>
+                      <td class="d-flex">
+                        <a href="/news/<%= item.id %>">
+                          <button class="btn btn-primary">
+                            Edit
+                          </button>
+                        </a>
+                        &nbsp;
+                        <a href="/news/<%= item.id %>" onclick="return confirm('Apakah anda yakin hapus news ini ?')">
+                          <form action="/news/<%= item.id %>?_method=delete" method="post">
+                            <!-- <input type="hidden" name="_method" value="delete" /> -->
+                            <button class="btn btn-danger">
+                              Delete
+                            </button>
+                          </form>
+                        </a>
+                      </td>
+                    </tr>
+                <% }); %> 
+            </tbody>
+          </table>
+        </div>
+  </div>
+
+  <%- include('../includes/footer'); %>
