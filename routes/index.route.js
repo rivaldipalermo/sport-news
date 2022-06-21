@@ -13,6 +13,7 @@ router.get("/register", UserController.register);
 router.post("/register/store", UserController.store);
 router.post("/login/auth", UserController.auth);
 
+router.use(auth);
 // category
 router.get("/category", CategoryController.index);
 router.get("/category/create", CategoryController.create);
@@ -23,5 +24,9 @@ router.delete("/category/:id", CategoryController.delete);
 
 // news
 router.get("/news", NewsController.index);
-
+router.get("/news/create", NewsController.create);
+router.post("/news/store", NewsController.store);
+router.get("/news/:id", NewsController.show);
+router.put("/news/:id", NewsController.update);
+router.delete("/news/:id", NewsController.delete);
 module.exports = router;

@@ -1,56 +1,84 @@
 const News = require("../models/News");
-
+const Category = require("../models/Category");
 module.exports = {
-  index: async (req, res) => {
-    const news = await News.findAll();
-    return res.render("news/index", {
-      news,
-    });
-  },
-  create: async (req, res) => {
-    return res.render("news/create");
-  },
-  store: async (req, res) => {
-    await News.create(req.body);
-    return res.redirect("/news");
-  },
-  show: async (req, res) => {
-    // galih's todo
-    const news = await News.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
+	index: async (req, res) => {
+		const news = await News.findAll();
+		return res.render("news/index", {
+			news,
+		});
+	},
+	create: async (req, res) => {
+		const categories = await Category.findAll();
+		return res.render("news/create", { categories });
+	},
+	store: async (req, res) => {
+		const now = new Date(Date.now());
 
-    if (!news) {
-      return res.redirect("/news");
-    }
+		await News.create({
+			news_title: req.body.title,
+			news_content: req.body.content,
+			category_id: req.body.category,
+			post_date:
+				now.getDate() +
+				"/" +
+				now.getMonth() +
+				"/" +
+				now.getFullYear(),
+			user_id: req.session.user.id,
+		});
+		return res.redirect("/news");
+	},
+	show: async (req, res) => {
+		// galih's todo
+		const news = await News.findOne({
+			where: {
+				id: req.params.id,
+			},
+		});
 
-    return res.render("news/edit", {
-      news,
-    });
-  },
-  update: async (req, res) => {
-    const news = await News.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
+		if (!news) {
+			return res.redirect("/news");
+		}
 
-    if (!news) {
-      return res.redirect("/news");
-    }
+		return res.render("news/edit", {
+			news,
+		});
+	},
+	update: async (req, res) => {
+		const news = await News.findOne({
+			where: {
+				id: req.params.id,
+			},
+		});
 
-    await News.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
+		if (!news) {
+			return res.redirect("/news");
+		}
+		const now = new Date(Date.now());
 
-    return res.redirect("/news");
-  },
-  delete: async (req, res) => {
-    News.destroy({ where: { id: req.params.id } });
-    return res.redirect("/news");
-  },
+		await News.update(
+			{
+				news_title: req.body.title,
+				news_content: req.body.content,
+				category_id: req.body.category,
+				post_date:
+					now.getDate() +
+					"/" +
+					now.getMonth() +
+					"/" +
+					now.getFullYear(),
+			},
+			{
+				where: {
+					id: req.params.id,
+				},
+			}
+		);
+
+		return res.redirect("/news");
+	},
+	delete: async (req, res) => {
+		News.destroy({ where: { id: req.params.id } });
+		return res.redirect("/news");
+	},
 };

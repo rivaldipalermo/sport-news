@@ -1,7 +1,7 @@
 <%- include('../includes/header'); %>
 
   <div class="container">
-    <a href="/posts/create">
+    <a href="/news/create">
         <button class="btn btn-primary">Create News</button>
     </a>
     <div>
@@ -31,7 +31,7 @@
                         &nbsp;
                         <a href="/news/<%= item.id %>" onclick="return confirm('Apakah anda yakin hapus news ini ?')">
                           <form action="/news/<%= item.id %>?_method=delete" method="post">
-                            <!-- <input type="hidden" name="_method" value="delete" /> -->
+                            <input type="hidden" name="_method" value="delete" />
                             <button class="btn btn-danger">
                               Delete
                             </button>
