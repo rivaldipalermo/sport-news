@@ -2,7 +2,15 @@ const News = require("../models/News");
 const Category = require("../models/Category");
 module.exports = {
 	index: async (req, res) => {
-		const news = await News.findAll();
+		const news = await News.findAll({
+			include: [
+				{
+					model: Category,
+					attributes: ["category_name"],
+					required: true,
+				},
+			],
+		});
 		return res.render("news/index", {
 			news,
 		});
@@ -34,14 +42,22 @@ module.exports = {
 			where: {
 				id: req.params.id,
 			},
+			include: [
+				{
+					model: Category,
+					attributes: ["category_name", "id"],
+					required: true,
+				},
+			],
 		});
+		const categories = await Category.findAll();
 
 		if (!news) {
 			return res.redirect("/news");
 		}
-
 		return res.render("news/edit", {
 			news,
+			categories,
 		});
 	},
 	update: async (req, res) => {

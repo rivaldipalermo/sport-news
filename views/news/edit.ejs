@@ -13,6 +13,21 @@
                   <label>Content</label>
                   <input type="text" class="form-control" value="<%= news.news_content %> " name="content">
                 </div>
+                <div class="form-group mb-3">
+                  <label for="category">Category </label>
+
+                <select class="form-control form-control" name="category">
+                  <option disabled="true" selected="selected">Select Category</option>
+                  <% categories.forEach(category=>{
+                    %>
+                    <option value="<%= category.id %>" <%= news.Category.category_name ==category.category_name &&"selected" %>>
+                      <%= category.category_name %>
+                    </option>
+                    <% }) %>
+                      }) %>
+                </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-warning">RESET</button>
               </form>

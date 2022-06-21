@@ -1,9 +1,20 @@
-module.exports = {
-  index: async (req, res) => {
-    const name = "Tes";
-    const title = "Halo";
-    const myList = ["tes", "bebas"];
+const News = require("../models/News");
+const User = require("../models/User");
+const Category = require("../models/Category");
 
-    return res.render("index", { name, title, myList });
-  },
+module.exports = {
+	index: async (req, res) => {
+		const news = await News.findAll({
+			include: [
+				{
+					model: Category,
+				},
+				{
+					model: User,
+				},
+			],
+		});
+
+		return res.render("index", { news });
+	},
 };

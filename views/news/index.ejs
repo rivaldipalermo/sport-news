@@ -12,6 +12,7 @@
                 <th>Title</th>
                 <th>Post Date</th>
                 <th>Content</th>
+                <th>Category</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -22,6 +23,8 @@
                       <td><%= item.news_title %></td>
                       <td><%= item.post_date %></td>
                       <td><%= item.news_content %></td>
+
+                      <td><%= item.Category.category_name%> </td>
                       <td class="d-flex">
                         <a href="/news/<%= item.id %>">
                           <button class="btn btn-primary">
